@@ -1,9 +1,10 @@
 # ==============================================================================
 # Enterprise Git Ignore Configuration
-# Prevents accidental leak of credentials, logs, internal drafts & dev artifacts
+# Strict policy: ONLY production code is tracked. Dev tools, brain sweeps,
+# scratch scripts, logs, and sensitive assets are strictly excluded.
 # ==============================================================================
 
-# Environment & Private Keys
+# Environment & Credentials
 .env
 .env.*
 !.env.example
@@ -23,14 +24,14 @@ cache/
 .foundry/
 broadcast/
 
-# Local Logs & OS Metadata
+# Local Logs & OS Files
 *.log
 logs/
 .DS_Store
 .vscode/
 .idea/
 
-# Internal Research, Raw Sweeps & Brain Logs
+# Internal Research, Brain Sweeps & Dumps
 results/
 eth-hunter-brain/
 slither_output.json
@@ -45,7 +46,7 @@ slither_output.json
 *.pdf
 scripts/bin/
 
-# Local Dev Scratch Scripts
+# Local Dev & Testing Scratch Scripts
 autonomous_loop.py
 continuous_loop_worker.py
 eth_audit_agent
@@ -53,3 +54,14 @@ start_*.sh
 start_*.bat
 run_audit.sh
 setup_linux.sh
+scripts/build_brain.py
+scripts/batch_scanner.py
+scripts/browser_task.py
+scripts/generate_wallet.py
+scripts/pearlai_client.py
+scripts/run_full_suite.py
+scripts/scheduler.py
+scripts/setup_mcp.py
+scripts/start_automated.sh
+scripts/submit_finding.py
+scripts/submit_to_coinmarketcap.py
