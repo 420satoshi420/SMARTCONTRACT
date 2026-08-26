@@ -1,42 +1,39 @@
-# Environment & Secrets
+# ==============================================================================
+# Enterprise Git Ignore Configuration
+# Prevents accidental leak of credentials, logs, internal drafts & dev artifacts
+# ==============================================================================
+
+# Environment & Private Keys
 .env
 .env.*
 !.env.example
 *.pem
 *.key
+*.p12
 
-# Dependencies & Virtualenvs
+# Dependencies & Build Artifacts
 node_modules/
 dist/
 venv/
 .venv/
 __pycache__/
 *.pyc
-
-# Build outputs & caches
 out/
 cache/
 .foundry/
+broadcast/
+
+# Local Logs & OS Metadata
 *.log
 logs/
 .DS_Store
 .vscode/
+.idea/
 
-# Large audit sweeps, internal drafts & raw files
-results/drafts/
-results/snapshots/
-results/submissions/
-results/submissions/archive/
-results/submissions/batch/
-results/reports/
-results/all_findings/json/
-results/all_findings/markdown/
-results/all_findings/all_findings.json
-results/immunefi_drafts/
-results/REVIEW_REQUEST_*.md
-results/SWARM_DEFI_AUDIT_REPORT.md
-results/ETH_HUNTER_FINDINGS_PORTFOLIO.md
-results/reward_wallet.json
+# Internal Research, Raw Sweeps & Brain Logs
+results/
+eth-hunter-brain/
+slither_output.json
 *.diff
 *.patch
 *.zip
@@ -44,4 +41,15 @@ results/reward_wallet.json
 *.tgz
 *.dmg
 *.vsix
+*.csv
+*.pdf
+scripts/bin/
 
+# Local Dev Scratch Scripts
+autonomous_loop.py
+continuous_loop_worker.py
+eth_audit_agent
+start_*.sh
+start_*.bat
+run_audit.sh
+setup_linux.sh

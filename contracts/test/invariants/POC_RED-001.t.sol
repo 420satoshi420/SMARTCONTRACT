@@ -2,7 +2,31 @@
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
-import "../../examples/sample_vulnerable_vault.sol";
+
+contract VulnerableEthVault {
+    mapping(address => uint256) public balances;
+    uint256 public totalDeposited;
+
+    function deposit() external payable {
+        require(msg.value > 0, "Zero deposit");
+        balances[msg.sender] += msg.value;
+        totalDeposited += msg.value;
+    }
+
+    function withdraw(uint256 amount) external {
+        require(balances[msg.sender] >= amount, "Insufficient balance");
+
+        (bool success, ) = msg.sender.call{value: amount}("");
+        require(success, "Transfer failed");
+
+        unchecked {
+            balances[msg.sender] -= amount;
+            totalDeposited -= amount;
+        }
+    }
+
+    receive() external payable {}
+}
 
 contract AttackContract {
     VulnerableEthVault public immutable vault;
