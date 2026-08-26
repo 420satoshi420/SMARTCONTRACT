@@ -2,14 +2,14 @@
 pragma solidity ^0.8.20;
 
 /**
- * @title NewWorldToken (NEW)
+ * @title PearlAIToken (PEARL)
  * @author Eth-Hunter & NewWorld Protocol
  * @notice Standard ERC-20 Token with EIP-2612 Permit, Burning, and Controlled Minting
  */
 contract NewWorldToken {
     // --- ERC-20 State ---
-    string public constant name = "New World";
-    string public constant symbol = "NEWWORLD";
+    string public constant name = "PearlAI";
+    string public constant symbol = "PEARL";
     uint8 public constant decimals = 18;
     uint256 public totalSupply;
 

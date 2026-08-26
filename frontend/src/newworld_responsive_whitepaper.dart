@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 const double kLargeScreenBreakpoint = 850.0;
 const double kMaxReadingContentWidth = 860.0;
 
-class NewWorldResponsiveWhitepaperApp extends StatelessWidget {
-  const NewWorldResponsiveWhitepaperApp({super.key});
+class PearlAIResponsiveWhitepaperApp extends StatelessWidget {
+  const PearlAIResponsiveWhitepaperApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'NewWorld Protocol Whitepaper & AMM',
+      title: 'PearlAI Protocol Whitepaper & AMM',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color(0xFF070B0E),
@@ -21,25 +21,25 @@ class NewWorldResponsiveWhitepaperApp extends StatelessWidget {
           surface: Color(0xFF0D1318),
         ),
       ),
-      home: const NewWorldWhitepaperScreen(),
+      home: const PearlAIWhitepaperScreen(),
     );
   }
 }
 
-class NewWorldWhitepaperScreen extends StatefulWidget {
-  const NewWorldWhitepaperScreen({super.key});
+class PearlAIWhitepaperScreen extends StatefulWidget {
+  const PearlAIWhitepaperScreen({super.key});
 
   @override
-  State<NewWorldWhitepaperScreen> createState() => _NewWorldWhitepaperScreenState();
+  State<PearlAIWhitepaperScreen> createState() => _PearlAIWhitepaperScreenState();
 }
 
-class _NewWorldWhitepaperScreenState extends State<NewWorldWhitepaperScreen> {
+class _PearlAIWhitepaperScreenState extends State<PearlAIWhitepaperScreen> {
   int _selectedSectionIndex = 0;
 
   final List<String> _sections = [
     '1. Executive Summary',
     '2. Problem & Solution',
-    '3. Ecosystem Tokenomics ($NEWWORLD)',
+    '3. Ecosystem Tokenomics ($PEARL)',
     '4. AMM Constant Product Architecture',
     '5. Staking & Yield Mechanics',
     '6. Verified On-Chain Deployments',
@@ -65,7 +65,7 @@ class _NewWorldWhitepaperScreenState extends State<NewWorldWhitepaperScreen> {
                 border: Border.all(color: const Color(0xFF00E5FF).withOpacity(0.4)),
               ),
               child: const Text(
-                'NEWWORLD',
+                'PEARL',
                 style: TextStyle(
                   color: Color(0xFF00E5FF),
                   fontWeight: FontWeight.w900,
@@ -109,7 +109,7 @@ class _NewWorldWhitepaperScreenState extends State<NewWorldWhitepaperScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  '🌿 NewWorld Protocol',
+                  '🌿 PearlAI Protocol',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 SizedBox(height: 6),
@@ -229,7 +229,7 @@ class _NewWorldWhitepaperScreenState extends State<NewWorldWhitepaperScreen> {
         _buildSectionCard(
           title: '1. Executive Summary',
           content:
-              'NewWorld Protocol is a decentralized liquidity AMM and staking yield ecosystem. '
+              'PearlAI Protocol is a decentralized liquidity AMM and staking yield ecosystem. '
               'It bridges decentralized finance with real-world tourism and wellness services, '
               'powering zero-fee direct bookings, Review-to-Earn (R2E) on-chain verification, '
               'and automated staking rewards on Ethereum and EVM-compatible layer 2 networks.',
@@ -238,7 +238,7 @@ class _NewWorldWhitepaperScreenState extends State<NewWorldWhitepaperScreen> {
         _buildSectionCard(
           title: '2. AMM Constant Product Formula',
           content:
-              'The NewWorldPool utilizes constant product invariant mechanics:\n\n'
+              'The PearlAIPool utilizes constant product invariant mechanics:\n\n'
               '(x + Δx · 0.997) · (y - Δy) ≥ k\n\n'
               '• Fee Tier: 0.30% (30 bps) retained in the reserve pool.\n'
               '• Slippage Protection: Deterministic minOutput guardrails.\n'
@@ -250,7 +250,7 @@ class _NewWorldWhitepaperScreenState extends State<NewWorldWhitepaperScreen> {
           content:
               'Reward distribution is calculated using an O(1) continuous yield accumulator index:\n\n'
               'accRewardPerShare(t) = accRewardPerShare(t₀) + ((t - t₀) · RewardRate · 10¹²) / TotalLiquidity\n\n'
-              '• Reward Rate: 0.01 NEW / second per LP share.\n'
+              '• Reward Rate: 0.01 PEARL / second per LP share.\n'
               '• Real-time Claiming: Instant rewards harvest via claimRewards().',
         ),
         const SizedBox(height: 16),
@@ -272,9 +272,9 @@ class _NewWorldWhitepaperScreenState extends State<NewWorldWhitepaperScreen> {
           childAspectRatio: 1.8,
           children: const [
             _MetricTile(title: 'ETH MARKET PRICE', value: '\$2,463.89', subtitle: '🟢 Live CMC'),
-            _MetricTile(title: 'NEW TOKEN PRICE', value: '\$0.6706', subtitle: '0.000272 ETH'),
-            _MetricTile(title: 'POOL TVL', value: '\$8,140.32', subtitle: '1.65 ETH + 6,069 NEW'),
-            _MetricTile(title: 'STAKING APY', value: '63.1%', subtitle: '0.01 NEW / sec'),
+            _MetricTile(title: 'PEARL TOKEN PRICE', value: '\$0.6706', subtitle: '0.000272 ETH'),
+            _MetricTile(title: 'POOL TVL', value: '\$8,140.32', subtitle: '1.65 ETH + 6,069 PEARL'),
+            _MetricTile(title: 'STAKING APY', value: '63.1%', subtitle: '0.01 PEARL / sec'),
           ],
         );
       },
@@ -323,8 +323,8 @@ class _NewWorldWhitepaperScreenState extends State<NewWorldWhitepaperScreen> {
           ),
           SizedBox(height: 12),
           Text(
-            '• NewWorldToken (NEWWORLD): 0x5FbDB2315678afecb367f032d93F642f64180aa3\n'
-            '• NewWorldPool (AMM & Vault): 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512\n'
+            '• PearlAIToken (PEARL): 0x5FbDB2315678afecb367f032d93F642f64180aa3\n'
+            '• PearlAIPool (AMM & Vault): 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512\n'
             '• Local EVM RPC: http://127.0.0.1:8545 (Chain ID: 31337)\n'
             '• Foundry Invariant Tests: 6 / 6 Suites Passed (100%)',
             style: TextStyle(fontFamily: 'monospace', fontSize: 12, height: 1.7, color: Colors.white70),

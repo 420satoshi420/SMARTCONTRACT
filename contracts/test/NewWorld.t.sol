@@ -34,8 +34,8 @@ contract NewWorldTest is Test {
     }
 
     function test_InitialState() public view {
-        assertEq(token.name(), "New World");
-        assertEq(token.symbol(), "NEWWORLD");
+        assertEq(token.name(), "PearlAI");
+        assertEq(token.symbol(), "PEARL");
         assertEq(token.decimals(), 18);
         assertEq(token.owner(), owner);
         assertEq(pool.owner(), owner);
