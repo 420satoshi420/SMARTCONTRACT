@@ -233,7 +233,7 @@ async def openclaw_crawl(payload: dict):
 @app.get("/api/omnia/routes")
 def omnia_routes():
     return {
-        "router": "Omnia Agent v2.5",
+        "router": "Omnia Agent v3.0 Enterprise",
         "status": "online",
         "orchestration": {
             "recon_agent": "OpenClaw (Playwright + Etherscan v2 API)",
@@ -241,10 +241,38 @@ def omnia_routes():
             "adversary_agent": "Red Team Adversary Agent",
             "defense_agent": "Blue Team Invariant Verification Agent",
             "verification_engine": "Foundry EVM Local Test Runner (forge-std)",
+            "gas_profiler": "EVM Opcode & Execution Gas Profiler v3.0",
+            "fuzz_scaffolder": "Foundry Property Invariant Generator v3.0",
             "synthesizer": "Immunefi / Code4rena Report Synthesizer"
         },
         "supported_chains": ["Ethereum", "Arbitrum", "Optimism", "Base", "Polygon", "BSC", "Sepolia"]
     }
+
+# ================= GAS PROFILING & FUZZ SCAFFOLDING APIS =================
+from core.gas_profiler import GasProfiler
+from core.fuzz_scaffolder import FuzzScaffolder
+
+@app.get("/api/gas/profile")
+def get_gas_profile():
+    return GasProfiler.profile_contract("contracts/NewWorldPool.sol")
+
+@app.post("/api/fuzz/generate")
+def generate_fuzz_harness(payload: dict):
+    contract_name = payload.get("contract_name", "TargetContract")
+    functions = payload.get("functions", [])
+    code = FuzzScaffolder.generate_fuzz_harness(contract_name, functions)
+    return {"contract_name": contract_name, "solidity_harness": code}
+
+@app.get("/api/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "version": "v3.0.0-enterprise",
+        "timestamp": datetime.datetime.now().isoformat(),
+        "evm_engine": "Foundry Cancun",
+        "active_ws_subscribers": len(active_connections)
+    }
+
 
 
 
