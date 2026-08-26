@@ -1,0 +1,35 @@
+{
+  "name": "PearlAI",
+  "type": "ERC20",
+  "symbol": "PEARL",
+  "decimals": 18,
+  "description": "PearlAI ($PEARL) is the official decentralized wellness, loyalty, and booking utility token of MassageMap Thailand, enabling zero-fee crypto checkouts, verified Review-to-Earn rewards, and merchant quality staking.",
+  "website": "https://massagemapthailand.com",
+  "explorer": "https://basescan.org/token/0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "status": "active",
+  "id": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "links": [
+    {
+      "name": "twitter",
+      "url": "https://twitter.com/MassageMapThai"
+    },
+    {
+      "name": "telegram",
+      "url": "https://t.me/massagemapthailand"
+    },
+    {
+      "name": "github",
+      "url": "https://github.com/420satoshi420/SMARTCONTRACT"
+    },
+    {
+      "name": "whitepaper",
+      "url": "https://massagemapthailand.com/whitepaper.pdf"
+    }
+  ],
+  "tags": [
+    "defi",
+    "rwa",
+    "tourism",
+    "base"
+  ]
+}

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="pearlShine" cx="35%" cy="30%" r="65%" fx="30%" fy="25%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="25%" stop-color="#f0f9ff"/>
+      <stop offset="55%" stop-color="#38bdf8"/>
+      <stop offset="85%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base Sphere Glow -->
+  <circle cx="256" cy="256" r="236" fill="url(#ringGrad)" opacity="0.25" filter="url(#glow)"/>
+  <circle cx="256" cy="256" r="226" fill="#0f172a" stroke="url(#ringGrad)" stroke-width="6"/>
+
+  <!-- Orbital Cyber Ring -->
+  <ellipse cx="256" cy="256" rx="200" ry="75" fill="none" stroke="url(#ringGrad)" stroke-width="4" stroke-dasharray="14 10" transform="rotate(-30 256 256)"/>
+  <circle cx="395" cy="175" r="8" fill="#38bdf8" filter="url(#glow)"/>
+  <circle cx="115" cy="335" r="6" fill="#c084fc" filter="url(#glow)"/>
+
+  <!-- Central Luminous Pearl Sphere -->
+  <circle cx="256" cy="256" r="140" fill="url(#pearlShine)"/>
+
+  <!-- Inner Hologram Geometric Neural Nodes -->
+  <path d="M256 160 L320 220 L300 310 L212 310 L192 220 Z" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="3"/>
+  <circle cx="256" cy="160" r="6" fill="#ffffff"/>
+  <circle cx="320" cy="220" r="6" fill="#ffffff"/>
+  <circle cx="300" cy="310" r="6" fill="#ffffff"/>
+  <circle cx="212" cy="310" r="6" fill="#ffffff"/>
+  <circle cx="192" cy="220" r="6" fill="#ffffff"/>
+  <circle cx="256" cy="245" r="10" fill="#ffffff" filter="url(#glow)"/>
+  <line x1="256" y1="160" x2="256" y2="245" stroke="rgba(255,255,255,0.8)" stroke-width="2.5"/>
+  <line x1="320" y1="220" x2="256" y2="245" stroke="rgba(255,255,255,0.8)" stroke-width="2.5"/>
+  <line x1="300" y1="310" x2="256" y2="245" stroke="rgba(255,255,255,0.8)" stroke-width="2.5"/>
+  <line x1="212" y1="310" x2="256" y2="245" stroke="rgba(255,255,255,0.8)" stroke-width="2.5"/>
+  <line x1="192" y1="220" x2="256" y2="245" stroke="rgba(255,255,255,0.8)" stroke-width="2.5"/>
+
+  <!-- Specular Reflection Highlight -->
+  <ellipse cx="205" cy="185" rx="42" ry="22" fill="#ffffff" opacity="0.6" transform="rotate(-35 205 185)"/>
+</svg>

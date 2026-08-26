@@ -74,6 +74,29 @@ export default function App() {
     setRunning(false)
   }
 
+  const addTokenToWallet = async () => {
+    if (typeof window !== "undefined" && (window as any).ethereum) {
+      try {
+        await (window as any).ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+              symbol: "PEARL",
+              decimals: 18,
+              image: "https://massagemapthailand.com/assets/pearl-token.svg",
+            },
+          },
+        })
+      } catch (e) {
+        console.error(e)
+      }
+    } else {
+      window.open("/add_to_metamask.html", "_blank")
+    }
+  }
+
   const getLogColor = (l: string) => {
     if (l.includes("[RED TEAM]")) return "#f87171"
     if (l.includes("[BLUE TEAM]")) return "#60a5fa"
@@ -106,6 +129,14 @@ export default function App() {
         </div>
 
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          {/* 1-Click Add $PEARL to Wallet */}
+          <button
+            onClick={addTokenToWallet}
+            title="Import $PEARL Token into MetaMask / Web3 Wallet (1-Click)"
+            style={{ background: "linear-gradient(135deg, #f6851b, #e2761b)", color: "#ffffff", border: "none", padding: "10px 14px", fontWeight: 800, cursor: "pointer", borderRadius: 6, fontSize: 12, display: "flex", alignItems: "center", gap: 6, boxShadow: "0 0 16px rgba(246, 133, 27, 0.4)" }}>
+            <span>🦊</span> ADD $PEARL TO WALLET
+          </button>
+
           {/* Hunter Wallet Pill */}
           <div style={{ border: "1px solid #0284c7", padding: "8px 16px", background: leaderboard.goal_hit ? "#05966920" : "#0f172a", borderRadius: 8, textAlign: "right" }}>
             <div style={{ fontSize: 11, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 0.5 }}>Hunter Payout Wallet</div>

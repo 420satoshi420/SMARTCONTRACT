@@ -1,0 +1,64 @@
+{
+  "name": "PearlAI Token List",
+  "timestamp": "2026-08-26T16:28:00Z",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "tags": {
+    "defi": {
+      "name": "DeFi",
+      "description": "Tokens used in decentralized finance on PearlAI & NewWorld AMM"
+    },
+    "tourism": {
+      "name": "Tourism & Wellness",
+      "description": "Utility tokens for MassageMap Thailand wellness booking and rewards"
+    }
+  },
+  "logoURI": "https://massagemapthailand.com/assets/pearl-token.svg",
+  "keywords": ["pearlai", "pearl", "massagemap", "wellness", "rwa", "defi", "base"],
+  "tokens": [
+    {
+      "chainId": 8453,
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "name": "PearlAI",
+      "symbol": "PEARL",
+      "decimals": 18,
+      "logoURI": "https://massagemapthailand.com/assets/pearl-token.svg",
+      "tags": ["defi", "tourism"],
+      "extensions": {
+        "website": "https://massagemapthailand.com",
+        "twitter": "https://twitter.com/MassageMapThai",
+        "github": "https://github.com/420satoshi420/SMARTCONTRACT"
+      }
+    },
+    {
+      "chainId": 84532,
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "name": "PearlAI (Base Sepolia)",
+      "symbol": "PEARL",
+      "decimals": 18,
+      "logoURI": "https://massagemapthailand.com/assets/pearl-token.svg",
+      "tags": ["defi", "tourism"]
+    },
+    {
+      "chainId": 11155111,
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "name": "PearlAI (Ethereum Sepolia)",
+      "symbol": "PEARL",
+      "decimals": 18,
+      "logoURI": "https://massagemapthailand.com/assets/pearl-token.svg",
+      "tags": ["defi", "tourism"]
+    },
+    {
+      "chainId": 1,
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "name": "PearlAI",
+      "symbol": "PEARL",
+      "decimals": 18,
+      "logoURI": "https://massagemapthailand.com/assets/pearl-token.svg",
+      "tags": ["defi", "tourism"]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "0x5FbDB2315678afecb367f032d93F642f64180aa3": {
+    "name": "PearlAI",
+    "logo": "pearl-token.svg",
+    "erc20": true,
+    "symbol": "PEARL",
+    "decimals": 18,
+    "website": "https://massagemapthailand.com",
+    "description": "PearlAI ($PEARL) wellness and booking token on MassageMap Thailand"
+  }
+}

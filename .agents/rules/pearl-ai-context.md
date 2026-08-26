@@ -1,3 +1,7 @@
+---
+trigger: model_decision
+---
+
 # PearlAI Context
 
 1. **Project Identity:** The project has been rebranded from "New World" to **PearlAI**, and the token is **$PEARL**.
