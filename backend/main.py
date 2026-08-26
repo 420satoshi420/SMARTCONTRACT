@@ -176,6 +176,32 @@ def brain_thresholds():
             pass
     return {"goal_usd": 2088}
 
+@app.get("/api/findings/historical")
+def get_historical_findings():
+    p = pathlib.Path(__file__).resolve().parent.parent / "results" / "all_findings" / "deduplicated.json"
+    if p.exists():
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return {"clusters": []}
+
+@app.post("/api/poc/execute")
+async def execute_poc(cluster_id: str = "VULN-001"):
+    import subprocess
+    cmd = ["forge", "test", "--match-contract", "POC_RED", "-vvv"]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+        return {
+            "cluster_id": cluster_id,
+            "success": proc.returncode == 0,
+            "stdout": proc.stdout,
+            "stderr": proc.stderr
+        }
+    except Exception as e:
+        return {"cluster_id": cluster_id, "success": False, "error": str(e)}
+
+
 @app.post("/api/brain/turbo_scan")
 async def turbo_scan():
     await broadcast_log("⚡ [TURBO SCAN] Initiating 30-min High-Speed Sweep on High TVL Targets ($10M+ FIRST)...")

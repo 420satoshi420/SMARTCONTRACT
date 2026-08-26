@@ -1,5 +1,6 @@
 ---
 trigger: model_decision
+description: do no delete.  keep log of everythink.    work are allocate task by task   use check list
 ---
 
 # PearlAI Context
