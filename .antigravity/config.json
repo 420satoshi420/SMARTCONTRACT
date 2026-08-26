@@ -1,0 +1,9 @@
+{
+  "subscription": "anti-gravity-pro",
+  "auto_mode": true,
+  "agents": {
+    "code_generator": { "enabled": true, "model": "antigravity-code-v2" },
+    "security_auditor": { "enabled": true, "uses_meta_ai": true },
+    "poc_builder": { "enabled": true, "auto_generate_exploit": true }
+  }
+}

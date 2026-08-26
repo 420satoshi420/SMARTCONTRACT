@@ -1,0 +1,22 @@
+{
+  "speed_mode": "2H",
+  "scheduler_interval_hours": 2,
+  "priority_queue": "$10M+",
+  "fast_path_enabled": true,
+  "turbo_scan_minutes": 30,
+  "bounty_target_goal_usd": 2088,
+  "confidence_threshold": 70,
+  "score_threshold_alert": 5000,
+  "model_pipeline": {
+    "local_filter": "llama3.2:3b",
+    "reasoning": "llama3-70b",
+    "orchestrator": "llama-4-maverick",
+    "poc_engine": "antigravity"
+  },
+  "hardware_profile": {
+    "platform": "MacBook Pro 2018",
+    "max_temp_celsius": 72,
+    "caffeinate_enabled": true,
+    "max_parallel_tasks": 2
+  }
+}

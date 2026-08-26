@@ -1,0 +1,41 @@
+[
+  {
+    "repo": "Stargate Finance",
+    "bounty_estimate": 25000,
+    "confidence": 94,
+    "score": 23500,
+    "would_bet_2088": true,
+    "model": "llama-4-maverick",
+    "poc_source": "antigravity",
+    "tvl": "$10.2M",
+    "severity": "Critical",
+    "finding": "Cross-function reentrancy in withdraw()",
+    "fast_path": true
+  },
+  {
+    "repo": "GMX V2 Perp",
+    "bounty_estimate": 15000,
+    "confidence": 88,
+    "score": 13200,
+    "would_bet_2088": true,
+    "model": "llama3-70b",
+    "poc_source": "antigravity",
+    "tvl": "$12.8M",
+    "severity": "High",
+    "finding": "Price staleness window in oracle execution",
+    "fast_path": true
+  },
+  {
+    "repo": "MUX Protocol",
+    "bounty_estimate": 5000,
+    "confidence": 76,
+    "score": 3800,
+    "would_bet_2088": false,
+    "model": "llama3.2:3b",
+    "poc_source": "slither",
+    "tvl": "$4.5M",
+    "severity": "Medium",
+    "finding": "Unchecked return on secondary liquidity pool",
+    "fast_path": false
+  }
+]

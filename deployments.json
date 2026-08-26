@@ -1,0 +1,25 @@
+{
+  "chainId": 31337,
+  "network": "Anvil / Local EVM",
+  "rpcUrl": "http://127.0.0.1:8545",
+  "deployedAt": "2026-08-26T03:35:48.000Z",
+  "contracts": {
+    "NewWorldToken": {
+      "name": "New World",
+      "symbol": "NEWWORLD",
+      "decimals": 18,
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "totalSupply": "1000000000000000000000000",
+      "initialSupplyFormatted": "1,000,000 NEW"
+    },
+    "NewWorldPool": {
+      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      "pair": "ETH / NEWWORLD",
+      "feeBps": 30,
+      "feePercent": "0.3%",
+      "initialReserveEth": "1.0 ETH",
+      "initialReserveToken": "10,000.0 NEW",
+      "rewardReservesFunded": "50,000.0 NEW"
+    }
+  }
+}

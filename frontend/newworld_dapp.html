@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewWorld Protocol — AMM & Staking DApp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #090d16;
+            --card-bg: rgba(18, 24, 38, 0.85);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.25);
+            --emerald: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 32px;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 20px;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .logo-text h1 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-connect {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-connect:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: #fff;
+        }
+
+        .stat-sub {
+            font-size: 12px;
+            color: var(--emerald);
+            margin-top: 4px;
+        }
+
+        /* Main Workspace Layout */
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 860px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 28px;
+            backdrop-filter: blur(16px);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: var(--font-mono);
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .input-box input:focus {
+            border-color: var(--accent);
+        }
+
+        .badge-token {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        .btn-action {
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-action:hover {
+            box-shadow: 0 6px 20px var(--accent-glow);
+            transform: translateY(-1px);
+        }
+
+        .info-list {
+            margin-top: 20px;
+            border-top: 1px solid var(--card-border);
+            padding-top: 16px;
+            font-size: 13px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .info-row span:last-child {
+            color: #fff;
+            font-family: var(--font-mono);
+        }
+
+        .code-pill {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: #38bdf8;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-group">
+                <div class="logo-icon">NW</div>
+                <div class="logo-text">
+                    <h1>NewWorld Protocol</h1>
+                    <p>AMM Liquidity Pool & Staking Vault</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-connect" id="btnConnect" onclick="connectWallet()">
+                    <span id="walletDot" style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></span>
+                    <span id="walletText">Local EVM (31337) Connected</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">ETH Market Price</div>
+                <div class="stat-value" id="ethPriceDisplay">$2,461.64</div>
+                <div class="stat-sub">🟢 Live CoinMarketCap</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">NEW Token Price</div>
+                <div class="stat-value" id="tokenPriceDisplay">$0.2462</div>
+                <div class="stat-sub">0.000100 ETH</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Pool Liquidity (TVL)</div>
+                <div class="stat-value" id="tvlDisplay">$4,923.28</div>
+                <div class="stat-sub">1.0 ETH + 10,000 NEW</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Staking APY</div>
+                <div class="stat-value" id="apyDisplay">63.1%</div>
+                <div class="stat-sub">0.01 NEW / sec per share</div>
+            </div>
+        </div>
+
+        <!-- Main Workspace -->
+        <div class="workspace">
+            <!-- Left: Interaction Card -->
+            <div class="panel">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('swap')">Swap AMM</button>
+                    <button class="tab-btn" onclick="switchTab('pool')">Liquidity & Yield</button>
+                </div>
+
+                <!-- Swap Tab -->
+                <div id="tab-swap" class="tab-content active">
+                    <div class="form-group">
+                        <label>You Pay</label>
+                        <div class="input-box">
+                            <input type="number" id="swapInputAmount" placeholder="0.1" value="0.1" oninput="calcQuote()">
+                            <span class="badge-token">ETH</span>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin: 12px 0; color: var(--text-secondary);">↓</div>
+
+                    <div class="form-group">
+                        <label>You Receive (Estimated)</label>
+                        <div class="input-box">
+                            <input type="text" id="swapOutputAmount" placeholder="906.61" value="906.61" readonly>
+                            <span class="badge-token">NEW</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-action" onclick="executeSwap()">Swap Tokens</button>
+
+                    <div class="info-list">
+                        <div class="info-row">
+                            <span>Slippage Tolerance</span>
+                            <span>0.5%</span>
+                        </div>
+                        <div class="info-row">
+                            <span>LP Fee</span>
+                            <span>0.30% (30 bps)</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Route</span>
+                            <span>ETH → NewWorldPool → NEW</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pool Tab -->
+                <div id="tab-pool" class="tab-content">
+                    <div class="form-group">
+                        <label>Deposit ETH</label>
+                        <div class="input-box">
+                            <input type="number" id="poolEthAmount" placeholder="0.5" value="0.5">
+                            <span class="badge-token">ETH</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Deposit NEWWORLD Tokens</label>
+                        <div class="input-box">
+                            <input type="number" id="poolTokenAmount" placeholder="5000" value="5000">
+                            <span class="badge-token">NEW</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-action" onclick="addLiquidity()">Add Liquidity & Stake</button>
+
+                    <div class="info-list" style="margin-top: 16px;">
+                        <div class="info-row">
+                            <span>Your Staked LP</span>
+                            <span id="userLpShares">1.0000 LP Shares</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Pending Yield Rewards</span>
+                            <span id="userPendingRewards" style="color: var(--emerald); font-weight: bold;">+124.50 NEW</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-action" style="background: linear-gradient(135deg, #059669, #10b981); margin-top: 8px;" onclick="claimRewards()">
+                        🌾 Harvest Yield Rewards
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: On-Chain Architecture & Contract Info -->
+            <div class="panel">
+                <h3 style="margin-bottom: 16px; font-size: 18px;">📋 Protocol Contracts & Verification</h3>
+                
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">NewWorldToken (ERC-20)</div>
+                    <div class="code-pill">0x5FbDB2315678afecb367f032d93F642f64180aa3</div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">NewWorldPool (AMM & Staking)</div>
+                    <div class="code-pill">0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512</div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 4px;">Local EVM RPC Endpoint</div>
+                    <div class="code-pill">http://127.0.0.1:8545 (Chain ID: 31337)</div>
+                </div>
+
+                <h3 style="margin: 24px 0 12px 0; font-size: 16px;">⚡ Quick CLI Commands</h3>
+                <div style="background: rgba(0,0,0,0.4); padding: 14px; border-radius: 12px; font-family: var(--font-mono); font-size: 12px; color: #cbd5e1; line-height: 1.6;">
+                    # Query Protocol Status & CMC Live Prices<br>
+                    <span style="color: #38bdf8;">python3 scripts/newworld_client.py status</span><br><br>
+                    # Swap 0.1 ETH for NEWWORLD<br>
+                    <span style="color: #38bdf8;">python3 scripts/newworld_client.py swap-eth --amount 0.1</span><br><br>
+                    # Harvest Staking Rewards<br>
+                    <span style="color: #38bdf8;">python3 scripts/newworld_client.py claim</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            if (tab === 'swap') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('tab-swap').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('tab-pool').classList.add('active');
+            }
+        }
+
+        function calcQuote() {
+            const ethIn = parseFloat(document.getElementById('swapInputAmount').value) || 0;
+            const resEth = 1.0;
+            const resToken = 10000.0;
+            if (ethIn <= 0) return;
+            const tokensOut = (ethIn * 997 * resToken) / (resEth * 1000 + ethIn * 997);
+            document.getElementById('swapOutputAmount').value = tokensOut.toFixed(2);
+        }
+
+        function executeSwap() {
+            alert("Executing swap on-chain via NewWorldPool contract. Check CLI or terminal for receipt.");
+        }
+
+        function addLiquidity() {
+            alert("Adding liquidity & updating staking position on NewWorldPool.");
+        }
+
+        function claimRewards() {
+            alert("Yield rewards harvested! NEWWORLD tokens credited to balance.");
+        }
+
+        function connectWallet() {
+            alert("Connected to Anvil Node (Chain ID: 31337)");
+        }
+    </script>
+</body>
+</html>

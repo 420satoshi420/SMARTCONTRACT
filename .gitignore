@@ -1,0 +1,37 @@
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies & Virtualenvs
+node_modules/
+dist/
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Build outputs & caches
+out/
+cache/
+.foundry/
+*.log
+logs/
+.DS_Store
+.vscode/
+
+# Large audit sweeps & raw files
+results/drafts/
+results/snapshots/
+results/submissions/archive/
+results/submissions/batch/
+results/reports/
+results/all_findings/json/
+results/all_findings/markdown/
+*.zip
+*.tar
+*.tgz
+*.dmg
+*.vsix

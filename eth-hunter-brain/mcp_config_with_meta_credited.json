@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "eth-hunter-brain": {
+      "command": "python3",
+      "args": [
+        "/Users/wakeup/Desktop/eth-hunter/eth-hunter-brain/mcp_server_unified_credited.py"
+      ]
+    }
+  }
+}
