@@ -1,0 +1,26 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Known public contract addresses, test packages, and Anvil dev accounts"
+regexes = [
+  '''0x5FbDB2315678afecb367f032d93F642f64180aa3''',
+  '''0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512''',
+  '''0x44489dC714CB4F7c95e817C2B3C5E0cDb696B1F6''',
+  '''0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80''',
+  '''0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45''',
+  '''0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2''',
+  '''0x6B175474E89094C44Da98b954EedeAC495271d0F'''
+]
+paths = [
+  '''\.env\.example$''',
+  '''\.gitignore$''',
+  '''backend/venv/.*''',
+  '''venv/.*''',
+  '''\.venv/.*''',
+  '''contracts/lib/forge-std/.*''',
+  '''out/.*''',
+  '''cache/.*''',
+  '''dist/.*''',
+  '''node_modules/.*'''
+]

@@ -53,8 +53,9 @@ def get_thresholds():
     return {"goal_usd": 2088}
 
 def get_live_market():
-    cmc_key = "53cfff81437841029b74d436fbfd5f99"
-    try:
+    cmc_key = os.getenv("COINMARKETCAP_API_KEY") or os.getenv("CMC_PRO_API_KEY", "")
+    if cmc_key:
+
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE

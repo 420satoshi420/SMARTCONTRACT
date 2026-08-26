@@ -3,8 +3,8 @@
 # Automated Testnet Deployer for Arbitrum Sepolia & Ethereum Sepolia
 # ==============================================================================
 
-ADDRESS="0x44489dC714CB4F7c95e817C2B3C5E0cDb696B1F6"
-PRIVATE_KEY="0x53378b951a76ae12f62bd0ceaf9ad06cd4ad640b22333b07e513375a57689d05"
+ADDRESS="${DEPLOYER_ADDRESS:-0x44489dC714CB4F7c95e817C2B3C5E0cDb696B1F6}"
+PRIVATE_KEY="${PRIVATE_KEY:-$(grep -E '^PRIVATE_KEY=' .env 2>/dev/null | cut -d '=' -f2)}"
 
 ARB_RPC="https://sepolia-rollup.arbitrum.io/rpc"
 ETH_RPC="https://ethereum-sepolia-rpc.publicnode.com"

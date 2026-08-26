@@ -1,7 +1,8 @@
 {
   "address": "0x44489dC714CB4F7c95e817C2B3C5E0cDb696B1F6",
-  "private_key": "0x53378b951a76ae12f62bd0ceaf9ad06cd4ad640b22333b07e513375a57689d05",
+  "private_key": "env:PRIVATE_KEY",
   "created_at": "2026-08-26T10:55:48+07:00",
+
   "networks": {
     "ethereum_sepolia": {
       "chain_id": 11155111,
