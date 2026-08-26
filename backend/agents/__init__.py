@@ -15,6 +15,7 @@ from .red_team import RedTeamAgent
 from .blue_team import BlueTeamAgent
 from .openclaw import OpenClawAgent
 from .hermes import HermesAgent
+from .omnia_router import OmniaRouterAgent
 
 __all__ = [
     "BaseLLMClient",
@@ -29,4 +30,6 @@ __all__ = [
     "BlueTeamAgent",
     "OpenClawAgent",
     "HermesAgent",
+    "OmniaRouterAgent",
 ]
+

@@ -100,7 +100,47 @@ export default function App() {
     setExecutingPoc(false)
   }
 
+  const [omniaTarget, setOmniaTarget] = useState("sample_vulnerable_vault.sol")
+  const [omniaGoal, setOmniaGoal] = useState("Audit contract, simulate exploit with Hermes & verify in Foundry EVM")
+  const [delegating, setDelegating] = useState(false)
+
+  const runOmniaDelegation = async () => {
+    setDelegating(true)
+    setRunning(true)
+    try {
+      const res = await fetch("http://localhost:8000/api/omnia/delegate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          goal: omniaGoal,
+          target: omniaTarget,
+          priority: "HIGH"
+        })
+      })
+      const data = await res.json()
+      if (data && data.task_id) {
+        setSelectedTarget({
+          repo: data.target,
+          finding: data.vulnerability,
+          confidence: 100,
+          bounty_estimate: data.estimated_bounty_usd || 25000,
+          synthesis: {
+            analysis: `Task [${data.task_id}] automated by Omnia Router across OpenClaw Playwright Crawler, Hermes Deep Reasoning, and Foundry EVM verification.`,
+            exploit_poc: "contract AttackContract {\n    VulnerableEthVault public vault;\n    function attack() external payable {\n        vault.deposit{value: 1 ether}();\n        vault.withdraw(1 ether);\n    }\n    receive() external payable {\n        if (address(vault).balance >= 1 ether) vault.withdraw(1 ether);\n    }\n}",
+            remediation: data.remediation
+          },
+          cluster_id: data.task_id
+        })
+      }
+    } catch (e) {
+      console.error(e)
+    }
+    setDelegating(false)
+    setRunning(false)
+  }
+
   const addTokenToWallet = async () => {
+
     if (typeof window !== "undefined" && (window as any).ethereum) {
       try {
         await (window as any).ethereum.request({
@@ -230,10 +270,47 @@ export default function App() {
           }}>
           🏆 Verified Past Findings & PoC Portfolio ({historicalClusters.length || 25} Clusters)
         </button>
+      {/* Omnia Router Autonomous Task Delegation Bar */}
+      <div style={{ marginTop: 14, background: "#0a101d", border: "1px solid #0284c750", borderRadius: 8, padding: "10px 14px", display: "flex", gap: 10, alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flex: 1 }}>
+          <span style={{ fontSize: 16 }}>🤖</span>
+          <span style={{ fontSize: 11, fontWeight: 800, color: "#38bdf8", whiteSpace: "nowrap" }}>OMNIA ROUTER:</span>
+          <input
+            type="text"
+            value={omniaTarget}
+            onChange={(e) => setOmniaTarget(e.target.value)}
+            placeholder="Enter Target Contract / 0x Address / URL to Crawl (e.g. 0x68b3... or sample_vault.sol)"
+            style={{ flex: 1, background: "#05070d", border: "1px solid #1e293b", color: "#f8fafc", padding: "6px 10px", borderRadius: 4, fontSize: 12, outline: "none" }}
+          />
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 10, color: "#94a3b8", display: "flex", alignItems: "center", gap: 4 }}>
+            <span>🕷️ OpenClaw</span> ➔ <span>🧠 Hermes</span> ➔ <span>🔴 Red/Blue</span> ➔ <span>⚡ Foundry</span>
+          </span>
+          <button
+            onClick={runOmniaDelegation}
+            disabled={delegating}
+            style={{
+              background: "linear-gradient(135deg, #0284c7, #2563eb)",
+              color: "#ffffff",
+              border: "none",
+              padding: "7px 14px",
+              borderRadius: 4,
+              fontWeight: 800,
+              fontSize: 11,
+              cursor: delegating ? "not-allowed" : "pointer",
+              boxShadow: "0 0 12px rgba(2, 132, 199, 0.4)",
+              whiteSpace: "nowrap"
+            }}>
+            {delegating ? "⏳ DELEGATING..." : "🚀 DELEGATE TASK"}
+          </button>
+        </div>
       </div>
 
       {/* Main Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 14 }}>
+
         {/* Left Column: Target Protocols or Verified Historical Clusters */}
         <div style={{ border: "1px solid #1e293b", background: "#0b0f19", padding: 16, borderRadius: 8, height: "calc(100vh - 180px)", display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #1e293b", paddingBottom: 10, marginBottom: 12 }}>

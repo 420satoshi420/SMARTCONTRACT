@@ -201,6 +201,44 @@ async def execute_poc(cluster_id: str = "VULN-001"):
     except Exception as e:
         return {"cluster_id": cluster_id, "success": False, "error": str(e)}
 
+# ================= OMNIA ROUTER & PLAYWRIGHT APIS =================
+from agents import OmniaRouterAgent, OpenClawAgent, HermesAgent
+omnia_router = OmniaRouterAgent(broadcast_callback=broadcast_log)
+
+@app.post("/api/omnia/delegate")
+async def omnia_delegate(payload: dict):
+    goal = payload.get("goal", "Audit Target Contract & Formulate Invariants")
+    target = payload.get("target", "sample_vulnerable_vault.sol")
+    priority = payload.get("priority", "HIGH")
+    res = await omnia_router.delegate_task(goal=goal, target_spec=target, priority=priority)
+    return res
+
+@app.post("/api/openclaw/crawl")
+async def openclaw_crawl(payload: dict):
+    target = payload.get("target", "")
+    if target.startswith("0x"):
+        res = omnia_router.openclaw.claw_contract(target)
+    else:
+        res = await omnia_router.openclaw.crawl_url_playwright(target)
+    return res
+
+@app.get("/api/omnia/routes")
+def omnia_routes():
+    return {
+        "router": "Omnia Agent v2.5",
+        "status": "online",
+        "orchestration": {
+            "recon_agent": "OpenClaw (Playwright + Etherscan v2 API)",
+            "reasoning_agent": "Hermes Framework (NVIDIA Nemotron Reasoning Engine)",
+            "adversary_agent": "Red Team Adversary Agent",
+            "defense_agent": "Blue Team Invariant Verification Agent",
+            "verification_engine": "Foundry EVM Local Test Runner (forge-std)",
+            "synthesizer": "Immunefi / Code4rena Report Synthesizer"
+        },
+        "supported_chains": ["Ethereum", "Arbitrum", "Optimism", "Base", "Polygon", "BSC", "Sepolia"]
+    }
+
+
 
 @app.post("/api/brain/turbo_scan")
 async def turbo_scan():

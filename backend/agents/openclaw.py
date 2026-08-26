@@ -151,3 +151,52 @@ class OpenClawAgent:
             "saved_files": saved_files,
             "has_abi": bool(abi and abi != "Contract source code not verified"),
         }
+
+    async def crawl_url_playwright(self, url: str) -> Dict[str, Any]:
+        """
+        Crawls a dynamic web page, bounty program brief (e.g. Immunefi/Code4rena),
+        or DeFi app frontend using Playwright browser automation with httpx fallback.
+        """
+        try:
+            from playwright.async_api import async_playwright
+            async with async_playwright() as p:
+                browser = await p.chromium.launch(headless=True)
+                page = await browser.new_page()
+                await page.goto(url, timeout=20000, wait_until="domcontentloaded")
+                title = await page.title()
+                content = await page.content()
+                
+                # Extract text content
+                text = await page.evaluate("() => document.body.innerText")
+                await browser.close()
+                return {
+                    "success": True,
+                    "engine": "Playwright Chromium",
+                    "url": url,
+                    "title": title,
+                    "text_length": len(text),
+                    "summary": text[:500] if text else "",
+                    "html_length": len(content)
+                }
+        except Exception as e:
+            # Fallback to fast httpx async
+            try:
+                import httpx
+                async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+                    resp = await client.get(url, headers={"User-Agent": "EthHunter-OpenClaw/1.0"})
+                    return {
+                        "success": True,
+                        "engine": "HTTPX Fast Crawler",
+                        "url": url,
+                        "title": url,
+                        "text_length": len(resp.text),
+                        "summary": resp.text[:500],
+                        "html_length": len(resp.content)
+                    }
+            except Exception as e2:
+                return {
+                    "success": False,
+                    "engine": "Failed",
+                    "url": url,
+                    "error": f"Playwright error: {e} | HTTPX error: {e2}"
+                }

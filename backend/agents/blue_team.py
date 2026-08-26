@@ -4,15 +4,25 @@ Blue Team Persona Agent: Evaluates Red Team hypotheses, prunes false positives, 
 import json
 import logging
 from typing import List, Dict, Optional
-from ..core.context import (
-    ContractContext,
-    RedTeamHypothesis,
-    BlueTeamCritique,
-    FindingStatus,
-    Severity,
-)
+try:
+    from ..core.context import (
+        ContractContext,
+        RedTeamHypothesis,
+        BlueTeamCritique,
+        FindingStatus,
+        Severity,
+    )
+except (ImportError, ValueError):
+    from core.context import (
+        ContractContext,
+        RedTeamHypothesis,
+        BlueTeamCritique,
+        FindingStatus,
+        Severity,
+    )
 from .base import BaseLLMClient
 from .prompts import BLUE_TEAM_SYSTEM_PROMPT
+
 
 logger = logging.getLogger(__name__)
 

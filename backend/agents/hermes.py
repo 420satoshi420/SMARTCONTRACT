@@ -6,14 +6,24 @@ Powered by NVIDIA NIM Nemotron / Hermes Reasoning API with high reasoning token 
 import json
 import logging
 from typing import Any, Dict, List, Optional
-from ..core.context import (
-    ContractContext,
-    RedTeamHypothesis,
-    BlueTeamCritique,
-    Severity,
-    FindingStatus,
-)
+try:
+    from ..core.context import (
+        ContractContext,
+        RedTeamHypothesis,
+        BlueTeamCritique,
+        Severity,
+        FindingStatus,
+    )
+except (ImportError, ValueError):
+    from core.context import (
+        ContractContext,
+        RedTeamHypothesis,
+        BlueTeamCritique,
+        Severity,
+        FindingStatus,
+    )
 from .base import BaseLLMClient, NvidiaNimBackend
+
 
 logger = logging.getLogger(__name__)
 

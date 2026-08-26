@@ -4,9 +4,13 @@ Red Team Persona Agent: Generates adversarial hypotheses and vulnerability threa
 import json
 import logging
 from typing import List, Optional
-from ..core.context import ContractContext, RedTeamHypothesis, BlueTeamCritique, Severity
+try:
+    from ..core.context import ContractContext, RedTeamHypothesis, BlueTeamCritique, Severity
+except (ImportError, ValueError):
+    from core.context import ContractContext, RedTeamHypothesis, BlueTeamCritique, Severity
 from .base import BaseLLMClient
 from .prompts import RED_TEAM_SYSTEM_PROMPT
+
 
 logger = logging.getLogger(__name__)
 
