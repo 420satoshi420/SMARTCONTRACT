@@ -1,0 +1,121 @@
+name: Google Cloud Free Tier Deployment (Web3 Infra)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-verify:
+    name: 🛡️ Security, Foundry & Build Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Run Foundry Smart Contract Tests
+        run: forge test -vvv
+
+      - name: Gitleaks Secret Verification
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate Python Modules
+        run: |
+          pip install -r backend/requirements.txt
+          python -m py_compile backend/server.py backend/main.py
+
+      - name: Build Frontend Bundle
+        working-directory: ./frontend
+        run: |
+          npm install --no-audit
+          npm run build
+
+  deploy-backend-cloudrun:
+    name: 🚀 Deploy Backend to Google Cloud Run (Free Tier)
+    needs: test-and-verify
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Google Cloud Authentication
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/setup-gcloud@v2
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Build and Deploy to Google Cloud Run
+        if: env.GCP_SA_KEY != ''
+        run: |
+          gcloud run deploy eth-hunter-backend \
+            --source . \
+            --region ${{ secrets.GCP_REGION || 'us-central1' }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --memory 512Mi \
+            --cpu 1 \
+            --min-instances 0 \
+            --max-instances 2 \
+            --set-env-vars="GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }},ETHERSCAN_API_KEY=${{ secrets.ETHERSCAN_API_KEY }}"
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+  deploy-frontend-firebase:
+    name: 🌐 Deploy Frontend to Firebase Hosting (Google Free Tier)
+    needs: test-and-verify
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build Frontend
+        working-directory: ./frontend
+        run: |
+          npm install --no-audit
+          npm run build
+
+      - name: Deploy to Firebase Hosting
+        if: env.FIREBASE_TOKEN != ''
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
+          projectId: ${{ secrets.GCP_PROJECT_ID || 'pearlai-protocol' }}
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
