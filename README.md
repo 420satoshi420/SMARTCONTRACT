@@ -1,6 +1,6 @@
 # 🦪 PearlAI Protocol ($PEARL)
 > **The AI-Powered Tourism Loyalty, Wellness & AMM Staking Protocol for Southeast Asia**  
-> *Official Ecosystem Token for [massagemapthailand.com](https://massagemapthailand.com)*
+> *Official Ecosystem Token for [www.massagemapthailand.com](https://www.massagemapthailand.com)*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Solidity](https://img.shields.io/badge/Solidity-^0.8.20-363636.svg)](https://soliditylang.org/)
