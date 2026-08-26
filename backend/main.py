@@ -1,9 +1,17 @@
+import sys
+from pathlib import Path
+
+backend_dir = Path(__file__).resolve().parent
+if str(backend_dir) not in sys.path:
+    sys.path.insert(0, str(backend_dir))
+
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 import pathlib, json, asyncio, time, os, datetime, urllib.request, ssl
 from typing import List, Optional
 from batch.batch_scanner import run_batch
 from batch.leaderboard import get_leaderboard
+
 
 app = FastAPI(title="ETH Hunter — Autonomous Smart Contract Security Suite")
 app.add_middleware(
