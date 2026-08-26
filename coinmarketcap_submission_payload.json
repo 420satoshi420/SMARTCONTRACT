@@ -1,0 +1,38 @@
+{
+  "request_type": "Add Cryptoasset",
+  "project_details": {
+    "project_name": "PearlAI",
+    "token_symbol": "PEARL",
+    "project_launch_date": "2026-08-26",
+    "category": "AI Agents, Decentralized Tourism & Wellness, Web3 Loyalty, AMM Staking",
+    "website": "https://massagemapthailand.com",
+    "whitepaper": "https://massagemapthailand.com/whitepaper.pdf",
+    "github_repository": "https://github.com/420satoshi420/pearlai-protocol",
+    "audit_report": "https://github.com/420satoshi420/pearlai-protocol/blob/main/results/SWARM_DEFI_AUDIT_REPORT.md",
+    "explorer_contract_url": "https://etherscan.io/token/0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "contact_email": "contact@massagemapthailand.com"
+  },
+  "tokenomics": {
+    "token_standard": "ERC-20 + EIP-2612 Permit",
+    "decimals": 18,
+    "max_supply": 1000000,
+    "total_supply": 1000000,
+    "circulating_supply": 310000,
+    "is_fixed_cap": true,
+    "mintable": false,
+    "pausable_by_owner": true
+  },
+  "exchange_liquidity": {
+    "primary_dex": "Uniswap V3 / PearlAIPool",
+    "liquidity_pool_contract": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "pair": "ETH / PEARL",
+    "initial_pool_eth": 1.5975,
+    "initial_pool_pearl": 6269.39
+  },
+  "social_profiles": {
+    "twitter_x": "https://twitter.com/MassageMapThai",
+    "telegram": "https://t.me/massagemapthailand",
+    "discord": "https://discord.gg/massagemap"
+  },
+  "short_description": "PearlAI ($PEARL) is the official AI-powered decentralized wellness, loyalty, and booking utility token of MassageMap Thailand (massagemapthailand.com). Designed for international tourists, local spas, and wellness providers, $PEARL powers zero-fee crypto checkouts, verified Review-to-Earn (R2E) rewards, and merchant quality staking across Southeast Asia's wellness ecosystem."
+}
