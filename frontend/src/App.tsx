@@ -18,9 +18,16 @@ export default function App() {
   const [executingPoc, setExecutingPoc] = useState(false)
   const terminalEndRef = useRef<HTMLDivElement>(null)
 
+  const API_BASE = import.meta.env.VITE_API_BASE || ""
+  const getWsUrl = () => {
+    if (import.meta.env.VITE_WS_URL) return import.meta.env.VITE_WS_URL
+    const proto = window.location.protocol === "https:" ? "wss:" : "ws:"
+    return `${proto}//${window.location.host}/ws/logs`
+  }
+
   const connectWs = () => {
     try {
-      const ws = new WebSocket("ws://localhost:8000/ws/logs")
+      const ws = new WebSocket(getWsUrl())
       ws.onmessage = (e) => {
         setLogs((prev) => [...prev.slice(-120), e.data])
       }
@@ -38,17 +45,17 @@ export default function App() {
 
   const fetchAll = async () => {
     try {
-      const r = await fetch("http://localhost:8000/api/ranking")
+      const r = await fetch(`${API_BASE}/api/ranking`)
       const j = await r.json()
       if (Array.isArray(j) && j.length > 0) setRanking(j)
 
-      const lb = await fetch("http://localhost:8000/api/leaderboard").then((res) => res.json())
+      const lb = await fetch(`${API_BASE}/api/leaderboard`).then((res) => res.json())
       if (lb) setLeaderboard(lb)
 
-      const m = await fetch("http://localhost:8000/api/market").then((res) => res.json())
+      const m = await fetch(`${API_BASE}/api/market`).then((res) => res.json())
       if (m) setMarket(m)
 
-      const h = await fetch("http://localhost:8000/api/findings/historical").then((res) => res.json())
+      const h = await fetch(`${API_BASE}/api/findings/historical`).then((res) => res.json())
       if (h && Array.isArray(h.clusters)) setHistoricalClusters(h.clusters)
     } catch {}
   }
@@ -62,7 +69,7 @@ export default function App() {
   const startBatch = async () => {
     setRunning(true)
     try {
-      const r = await fetch("http://localhost:8000/api/batch", { method: "POST" })
+      const r = await fetch(`${API_BASE}/api/batch`, { method: "POST" })
       const j = await r.json()
       if (j.ranked) setRanking(j.ranked)
       if (j.leaderboard) setLeaderboard(j.leaderboard)
@@ -73,7 +80,7 @@ export default function App() {
   const runSampleAudit = async () => {
     setRunning(true)
     try {
-      const r = await fetch("http://localhost:8000/api/audit_target?target_name=SampleVulnerableVault", { method: "POST" })
+      const r = await fetch(`${API_BASE}/api/audit_target?target_name=SampleVulnerableVault`, { method: "POST" })
       const j = await r.json()
       if (j.ranked) setRanking(j.ranked)
       if (j.leaderboard) setLeaderboard(j.leaderboard)
@@ -85,7 +92,7 @@ export default function App() {
     setExecutingPoc(true)
     setPocOutput("⏳ Compiling and executing Foundry EVM exploit test in real-time...")
     try {
-      const res = await fetch(`http://localhost:8000/api/poc/execute?cluster_id=${clusterId}`, { method: "POST" })
+      const res = await fetch(`${API_BASE}/api/poc/execute?cluster_id=${clusterId}`, { method: "POST" })
       const data = await res.json()
       if (data.stdout) {
         setPocOutput(data.stdout)
@@ -108,7 +115,7 @@ export default function App() {
     setDelegating(true)
     setRunning(true)
     try {
-      const res = await fetch("http://localhost:8000/api/omnia/delegate", {
+      const res = await fetch(`${API_BASE}/api/omnia/delegate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -118,6 +125,7 @@ export default function App() {
         })
       })
       const data = await res.json()
+
       if (data && data.task_id) {
         setSelectedTarget({
           repo: data.target,

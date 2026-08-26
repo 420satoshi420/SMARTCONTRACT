@@ -22,16 +22,26 @@ logs/
 .DS_Store
 .vscode/
 
-# Large audit sweeps & raw files
+# Large audit sweeps, internal drafts & raw files
 results/drafts/
 results/snapshots/
+results/submissions/
 results/submissions/archive/
 results/submissions/batch/
 results/reports/
 results/all_findings/json/
 results/all_findings/markdown/
+results/all_findings/all_findings.json
+results/immunefi_drafts/
+results/REVIEW_REQUEST_*.md
+results/SWARM_DEFI_AUDIT_REPORT.md
+results/ETH_HUNTER_FINDINGS_PORTFOLIO.md
+results/reward_wallet.json
+*.diff
+*.patch
 *.zip
 *.tar
 *.tgz
 *.dmg
 *.vsix
+
